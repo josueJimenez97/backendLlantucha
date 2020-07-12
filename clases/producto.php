@@ -12,6 +12,29 @@
             $this->cantidad=$cantidad;
         }
 
+        public function ejecutarAccion($accion){
+            $res=false;
+            switch($accion){
+                case "nada": $res=true;
+                break;
+                case "insertar": $res=$this->insertarProducto();
+            }
+            return $res;
+        }
+
+        private function insertarProducto(){
+            $res=true;
+            try{
+                $con=Conexion::obtenerConexion();
+                $consulta= $con->prepare("insert into producto (nombre,imagen,categoria,cantidad) 
+                values (?,?,?,?)");
+                $consulta->execute([$this->nombre,$this->imagen,$this->categoria,$this->cantidad]);
+               
+            }catch(PDOException $ex){
+                $res=false;
+            }
+            return $res;
+        }
         public function jsonSerialize(){
             return [
                 'nombre'=>$this->nombre,
