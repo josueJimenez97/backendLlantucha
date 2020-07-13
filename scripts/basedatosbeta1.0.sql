@@ -64,6 +64,7 @@ CREATE TABLE "Producto" (
   "Tipo_Producto_idtipo" INTEGER NOT NULL,
   "Fabrica_idfrabica" INTEGER NOT NULL,
   "nombre_producto" VARCHAR NULL,
+  "imagen" VARCHAR NULL,
   PRIMARY KEY ("id_producto", "Tipo_Producto_idtipo", "Fabrica_idfrabica")
 );
 
