@@ -4,6 +4,9 @@
     require_once './conexion.php';
     require_once './clases/producto.php';
     $con=Conexion::obtenerConexion(); //ABRIMOS CONEXION A POSTGRES CONFIGUAR config.php CON LO DATOS DE SU POSTGRES
+    $json = file_get_contents('php://input');
+    
+    $prod=json_decode($json);
     
     $consulta= $con->prepare("SELECT*
     FROM(
@@ -12,8 +15,15 @@
       WHERE item.\"Producto_id_producto\"= prod.\"id_producto\" AND
          item.\"Producto_Tipo_Producto_idtipo\"=prod.\"Tipo_Producto_idtipo\"
       ) as dos, \"Tipo_Producto\" as tipo
-    WHERE dos.\"Tipo_Producto_idtipo\"=tipo.\"idtipo\"");
-    $consulta->execute();    
+    WHERE dos.\"Tipo_Producto_idtipo\"=tipo.\"idtipo\" AND tipo.\"nombretipo\"='Obra Gruesa'");
+    $consulta->execute();
+    //$consulta->execute([$prod->categoria]);
+    /*
+    if ($consulta->fetch(PDO::FETCH_OBJ))
+    {
+        print("yes");
+    }
+    */
     $resultado=$consulta->fetchAll();
     
     $listaProductos=array();

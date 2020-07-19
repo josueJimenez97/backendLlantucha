@@ -1,6 +1,6 @@
 -- -------------------------------------------------------------------------
 -- PostgreSQL SQL create tables
--- exported at Mon Jul 13 09:01:13 BOT 2020 with easyDesigner
+-- exported at Sun Jul 19 15:13:39 BOT 2020 with easyDesigner
 -- -------------------------------------------------------------------------
 
 -- -------------------------------------------------------------------------
@@ -29,12 +29,12 @@ CREATE TABLE "Fabrica" (
 CREATE TABLE "Detalle_Venta" (
   "Venta_idventa" INTEGER NOT NULL,
   "Item_Producto_Tipo_Producto_idtipo" INTEGER NOT NULL,
-  "Item_Producto_Fabrica_idfrabica" INTEGER NOT NULL,
   "Venta_Usuario_iduser" INTEGER NOT NULL,
   "Item_Producto_id_producto" INTEGER NOT NULL,
+  "Item_Fabrica_idfrabica" INTEGER NOT NULL,
   "cantidad" INTEGER NULL,
-  "totalparcial" DOUBLE NULL,
-  PRIMARY KEY ("Venta_idventa", "Item_Producto_Tipo_Producto_idtipo", "Item_Producto_Fabrica_idfrabica", "Venta_Usuario_iduser", "Item_Producto_id_producto")
+  "totalparcial" DOUBLE precision NULL,
+  PRIMARY KEY ("Venta_idventa", "Item_Producto_Tipo_Producto_idtipo", "Venta_Usuario_iduser", "Item_Producto_id_producto", "Item_Fabrica_idfrabica")
 );
 
 -- -------------------------------------------------------------------------
@@ -62,10 +62,9 @@ CREATE TABLE "Tipo_Producto" (
 CREATE TABLE "Producto" (
   "id_producto" INTEGER NOT NULL,
   "Tipo_Producto_idtipo" INTEGER NOT NULL,
-  "Fabrica_idfrabica" INTEGER NOT NULL,
   "nombre_producto" VARCHAR NULL,
   "imagen" VARCHAR NULL,
-  PRIMARY KEY ("id_producto", "Tipo_Producto_idtipo", "Fabrica_idfrabica")
+  PRIMARY KEY ("id_producto", "Tipo_Producto_idtipo")
 );
 
 -- -------------------------------------------------------------------------
@@ -73,11 +72,11 @@ CREATE TABLE "Producto" (
 -- -------------------------------------------------------------------------
 CREATE TABLE "Item" (
   "Producto_Tipo_Producto_idtipo" INTEGER NOT NULL,
-  "Producto_Fabrica_idfrabica" INTEGER NOT NULL,
   "Producto_id_producto" INTEGER NOT NULL,
+  "Fabrica_idfrabica" INTEGER NOT NULL,
   "garantia" BOOL NULL,
   "cantidad" INTEGER NULL,
-  PRIMARY KEY ("Producto_Tipo_Producto_idtipo", "Producto_Fabrica_idfrabica", "Producto_id_producto")
+  PRIMARY KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto", "Fabrica_idfrabica")
 );
 
 -- -------------------------------------------------------------------------
@@ -120,7 +119,7 @@ CREATE TABLE "Visita" (
   "Fecha_Visita" DATE NOT NULL,
   "Usuario_iduser" INTEGER NOT NULL,
   "Interfaz_id_interfaz" INTEGER NOT NULL,
-  "tiempo" DOUBLE NULL,
+  "tiempo" DOUBLE precision NULL,
   PRIMARY KEY ("Fecha_Visita", "Usuario_iduser", "Interfaz_id_interfaz")
 );
 
@@ -131,8 +130,8 @@ ALTER TABLE "Detalle_Venta" ADD FOREIGN KEY ("Venta_idventa", "Venta_Usuario_idu
     REFERENCES "Venta" ("idventa", "Usuario_iduser")
       ON DELETE NO ACTION
       ON UPDATE NO ACTION;
-ALTER TABLE "Detalle_Venta" ADD FOREIGN KEY ("Item_Producto_Tipo_Producto_idtipo", "Item_Producto_Fabrica_idfrabica", "Item_Producto_id_producto") 
-    REFERENCES "Item" ("Producto_Tipo_Producto_idtipo", "Producto_Fabrica_idfrabica", "Producto_id_producto")
+ALTER TABLE "Detalle_Venta" ADD FOREIGN KEY ("Item_Producto_Tipo_Producto_idtipo", "Item_Producto_id_producto", "Item_Fabrica_idfrabica") 
+    REFERENCES "Item" ("Producto_Tipo_Producto_idtipo", "Producto_id_producto", "Fabrica_idfrabica")
       ON DELETE NO ACTION
       ON UPDATE NO ACTION;
 
@@ -151,16 +150,16 @@ ALTER TABLE "Producto" ADD FOREIGN KEY ("Tipo_Producto_idtipo")
     REFERENCES "Tipo_Producto" ("idtipo")
       ON DELETE NO ACTION
       ON UPDATE NO ACTION;
-ALTER TABLE "Producto" ADD FOREIGN KEY ("Fabrica_idfrabica") 
-    REFERENCES "Fabrica" ("idfrabica")
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION;
 
 -- -------------------------------------------------------------------------
 -- Relations for table: Item
 -- -------------------------------------------------------------------------
-ALTER TABLE "Item" ADD FOREIGN KEY ("Producto_Tipo_Producto_idtipo", "Producto_Fabrica_idfrabica", "Producto_id_producto") 
-    REFERENCES "Producto" ("Tipo_Producto_idtipo", "Fabrica_idfrabica", "id_producto")
+ALTER TABLE "Item" ADD FOREIGN KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto") 
+    REFERENCES "Producto" ("Tipo_Producto_idtipo", "id_producto")
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION;
+ALTER TABLE "Item" ADD FOREIGN KEY ("Fabrica_idfrabica") 
+    REFERENCES "Fabrica" ("idfrabica")
       ON DELETE NO ACTION
       ON UPDATE NO ACTION;
 
