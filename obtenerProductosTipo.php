@@ -6,8 +6,7 @@
     $con=Conexion::obtenerConexion(); //ABRIMOS CONEXION A POSTGRES CONFIGUAR config.php CON LO DATOS DE SU POSTGRES
     $json = file_get_contents('php://input');
     
-    $prod=json_decode($json);
-    
+    $idTipo=$_GET['idTipo'];
     $consulta= $con->prepare("SELECT*
     FROM(
       SELECT \"nombre_producto\",\"imagen\",\"cantidad\",\"Tipo_Producto_idtipo\"
@@ -17,8 +16,9 @@
       ) as dos, \"Tipo_Producto\" as tipo
     WHERE dos.\"Tipo_Producto_idtipo\"=tipo.\"idtipo\" AND tipo.\"nombretipo\"='Obra Gruesa'");
     $consulta->execute();
-    //$consulta->execute([$prod->categoria]);
-    /*
+    $consulta->execute([$prod->categoria]);
+    /*$resp=$consulta->fetch(PDO::FETCH_OBJ);
+    $resp->nombre;
     if ($consulta->fetch(PDO::FETCH_OBJ))
     {
         print("yes");
