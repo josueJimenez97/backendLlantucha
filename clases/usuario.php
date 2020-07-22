@@ -13,10 +13,6 @@
             return self::$userid;
         }
         public static function obtenerSesion(){
-
-            if(!isset(self::$userid)){
-                self::crearSesion(null);
-            }
             return self::$userid;
         }
         public function jsonSerialize(){

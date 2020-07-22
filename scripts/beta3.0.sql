@@ -1,8 +1,33 @@
+CREATE SEQUENCE seq_producto
+        INCREMENT 1
+        MINVALUE 110
+        MAXVALUE 2147483648 START 2220
+        CACHE 1;
+
+
+CREATE SEQUENCE test_usuario
+        INCREMENT 1
+        MINVALUE 110
+        MAXVALUE 2147483648 START 1110
+        CACHE 1;
+
+
+CREATE SEQUENCE seq_fabrica
+        INCREMENT 1
+        MINVALUE 110
+        MAXVALUE 2147483648 START 3330
+        CACHE 1;
+CREATE SEQUENCE test_venta
+        INCREMENT 1
+        MINVALUE 110
+        MAXVALUE 2147483648 START 5550
+        CACHE 1;
+--Insertar estas sequencias primero 
+
+
 -- Table: public.Calificacion
 
 -- DROP TABLE public."Calificacion";
-
--- El orden de insercion si afecta y ALTER TABLE public."???" OWNER to postgres; al final siempre.
 
 CREATE TABLE public."Calificacion"
 (
@@ -49,14 +74,13 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Detalle_Venta"
     OWNER to postgres;
-
 -- Table: public.Fabrica
 
 -- DROP TABLE public."Fabrica";
 
 CREATE TABLE public."Fabrica"
 (
-    idfrabica integer NOT NULL,
+    idfrabica integer NOT NULL DEFAULT nextval('seq_fabrica'::regclass),
     nombrefabrica character varying COLLATE pg_catalog."default",
     CONSTRAINT "Fabrica_pkey" PRIMARY KEY (idfrabica)
 )
@@ -80,7 +104,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Interfaz"
     OWNER to postgres;
-
 -- Table: public.Item
 
 -- DROP TABLE public."Item";
@@ -90,7 +113,6 @@ CREATE TABLE public."Item"
     "Producto_Tipo_Producto_idtipo" integer NOT NULL,
     "Producto_id_producto" integer NOT NULL,
     "Fabrica_idfrabica" integer NOT NULL,
-    garantia boolean,
     cantidad integer,
     CONSTRAINT "Item_pkey" PRIMARY KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto", "Fabrica_idfrabica"),
     CONSTRAINT "Item_Fabrica_idfrabica_fkey" FOREIGN KEY ("Fabrica_idfrabica")
@@ -113,10 +135,11 @@ ALTER TABLE public."Item"
 
 CREATE TABLE public."Producto"
 (
-    id_producto integer NOT NULL,
+    id_producto integer NOT NULL DEFAULT nextval('seq_producto'::regclass),
     "Tipo_Producto_idtipo" integer NOT NULL,
     nombre_producto character varying COLLATE pg_catalog."default",
     imagen character varying COLLATE pg_catalog."default",
+    precio integer,
     CONSTRAINT "Producto_pkey" PRIMARY KEY (id_producto, "Tipo_Producto_idtipo"),
     CONSTRAINT "Producto_Tipo_Producto_idtipo_fkey" FOREIGN KEY ("Tipo_Producto_idtipo")
         REFERENCES public."Tipo_Producto" (idtipo) MATCH SIMPLE
@@ -143,8 +166,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Tipo_Producto"
     OWNER to postgres;
-
-
 -- Table: public.Usuario
 
 -- DROP TABLE public."Usuario";
@@ -162,15 +183,13 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Usuario"
     OWNER to postgres;
-
-
 -- Table: public.Venta
 
 -- DROP TABLE public."Venta";
 
 CREATE TABLE public."Venta"
 (
-    idventa integer NOT NULL DEFAULT nextval('"Venta_idventa_seq"'::regclass),
+    idventa integer NOT NULL DEFAULT nextval('test_venta'::regclass),
     "Usuario_iduser" integer NOT NULL,
     fechaventa date,
     CONSTRAINT "Venta_pkey" PRIMARY KEY (idventa, "Usuario_iduser"),
@@ -184,8 +203,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Venta"
     OWNER to postgres;
-
-
 -- Table: public.Visita
 
 -- DROP TABLE public."Visita";
@@ -211,8 +228,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Visita"
     OWNER to postgres;
-
-
 -- Table: public.log_usuario
 
 -- DROP TABLE public.log_usuario;
@@ -236,4 +251,5 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.log_usuario
     OWNER to postgres;
+
 
