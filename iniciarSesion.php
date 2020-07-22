@@ -12,8 +12,10 @@
     $consulta->execute([$usuario->user,$usuario->pass]);
     $resultado=$consulta->fetch(PDO::FETCH_OBJ);
     if($resultado){
+        Usuario::crearSesion($resultado);
         $miRespuesta="correcto";
     }else{
+        Usuario::cerrarSesion();
         $miRespuesta="incorrecto";
     }
     header('Content-Type: application/json');
