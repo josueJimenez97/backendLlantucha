@@ -7,10 +7,11 @@
     $con=Conexion::obtenerConexion(); //ABRIMOS CONEXION A POSTGRES CONFIGUAR config.php CON LO DATOS DE SU POSTGRES
     $miRespuesta="correcto";
 
-    $categoria= $_GET['categoria'];
+    $categoria= $_GET['idtipo'];
     $idproducto= $_GET['idproducto'];
     $fabrica= $_GET['fabrica'];
     $cantidad= $_GET['cantidad'];
+    $precio= $_GET['precio'];
 
     $consulta= $con->prepare("select * from getidfabrica(?)");
     $consulta->execute($fabrica);
@@ -18,8 +19,8 @@
     if (!$idfabrica || !$categoria || !$idproducto || !$fabrica || !$cantidad)
         $miRespuesta="incorrecto";
 
-    $consulta= $con->prepare("call add_item(?,?,?)");
-    $consulta->execute($categoria,$idproducto,$idfabrica,$cantidad);
+    $consulta= $con->prepare("call add_item(?,?,?,?)");
+    $consulta->execute($categoria,$idproducto,$idfabrica,$cantidad,$precio);
     $idfabrica=$consulta->fetch(PDO::FETCH_OBJ);
 
     if (!$idfabrica)

@@ -24,7 +24,6 @@ CREATE SEQUENCE test_venta
         CACHE 1;
 --Insertar estas sequencias primero 
 
-
 -- Table: public.Calificacion
 
 -- DROP TABLE public."Calificacion";
@@ -80,9 +79,9 @@ ALTER TABLE public."Detalle_Venta"
 
 CREATE TABLE public."Fabrica"
 (
-    idfrabica integer NOT NULL DEFAULT nextval('seq_fabrica'::regclass),
+    idfabrica integer NOT NULL DEFAULT nextval('seq_fabrica'::regclass),
     nombrefabrica character varying COLLATE pg_catalog."default",
-    CONSTRAINT "Fabrica_pkey" PRIMARY KEY (idfrabica)
+    CONSTRAINT "Fabrica_pkey" PRIMARY KEY (idfabrica)
 )
 
 TABLESPACE pg_default;
@@ -104,7 +103,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Interfaz"
     OWNER to postgres;
--- Table: public.Item
+    -- Table: public.Item
 
 -- DROP TABLE public."Item";
 
@@ -114,9 +113,10 @@ CREATE TABLE public."Item"
     "Producto_id_producto" integer NOT NULL,
     "Fabrica_idfrabica" integer NOT NULL,
     cantidad integer,
+    precio integer,
     CONSTRAINT "Item_pkey" PRIMARY KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto", "Fabrica_idfrabica"),
     CONSTRAINT "Item_Fabrica_idfrabica_fkey" FOREIGN KEY ("Fabrica_idfrabica")
-        REFERENCES public."Fabrica" (idfrabica) MATCH SIMPLE
+        REFERENCES public."Fabrica" (idfabrica) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT "Item_Producto_Tipo_Producto_idtipo_Producto_id_producto_fkey" FOREIGN KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto")
@@ -129,7 +129,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Item"
     OWNER to postgres;
--- Table: public.Producto
+    -- Table: public.Producto
 
 -- DROP TABLE public."Producto";
 
@@ -139,7 +139,6 @@ CREATE TABLE public."Producto"
     "Tipo_Producto_idtipo" integer NOT NULL,
     nombre_producto character varying COLLATE pg_catalog."default",
     imagen character varying COLLATE pg_catalog."default",
-    precio integer,
     CONSTRAINT "Producto_pkey" PRIMARY KEY (id_producto, "Tipo_Producto_idtipo"),
     CONSTRAINT "Producto_Tipo_Producto_idtipo_fkey" FOREIGN KEY ("Tipo_Producto_idtipo")
         REFERENCES public."Tipo_Producto" (idtipo) MATCH SIMPLE
@@ -151,7 +150,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Producto"
     OWNER to postgres;
--- Table: public.Tipo_Producto
+    -- Table: public.Tipo_Producto
 
 -- DROP TABLE public."Tipo_Producto";
 
@@ -166,7 +165,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Tipo_Producto"
     OWNER to postgres;
--- Table: public.Usuario
+    -- Table: public.Usuario
 
 -- DROP TABLE public."Usuario";
 
@@ -183,7 +182,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Usuario"
     OWNER to postgres;
--- Table: public.Venta
+    -- Table: public.Venta
 
 -- DROP TABLE public."Venta";
 
@@ -203,7 +202,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Venta"
     OWNER to postgres;
--- Table: public.Visita
+    -- Table: public.Visita
 
 -- DROP TABLE public."Visita";
 
@@ -228,7 +227,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Visita"
     OWNER to postgres;
--- Table: public.log_usuario
+    -- Table: public.log_usuario
 
 -- DROP TABLE public.log_usuario;
 
@@ -251,5 +250,4 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.log_usuario
     OWNER to postgres;
-
-
+    

@@ -3,12 +3,10 @@
         private $nombre;
         private $categoria;
         private $imagen;
-        private $precio;
-        public function __construct($nombre,$categoria,$imagen, $precio){
+        public function __construct($nombre,$categoria,$imagen){
             $this->nombre=$nombre;
             $this->categoria=$categoria;
             $this->imagen=$imagen;
-            $this->precio=$precio;
         }
 
         public function ejecutarAccion($accion){
@@ -25,13 +23,14 @@
             $res=10;
             try{
                 $con=Conexion::obtenerConexion();
-                $consulta= $con->prepare('select * from fadd_product(?,?,?,?)');
-                $consulta->execute([$this->categoria,$this->nombre,$this->imagen,$this->precio]);
+                $consulta= $con->prepare('select * from fadd_product(?,?,?)');
+                $consulta->execute([$this->categoria,$this->nombre,$this->imagen]);
                
             }catch(PDOException $ex){
                 $res=-10;
             }
             $res=$consulta->fetch(PDO::FETCH_OBJ);//test this
+            return $res;
             
         }
         public function jsonSerialize(){
@@ -39,8 +38,6 @@
                 'nombre'=>$this->nombre,
                 'categoria'=>$this->categoria,
                 'imagen'=>$this->imagen,
-                'precio'=>$this->precio
-                
             ];
         }
     }
