@@ -6,12 +6,10 @@
     $con=Conexion::obtenerConexion(); //ABRIMOS CONEXION A POSTGRES CONFIGUAR config.php CON LO DATOS DE SU POSTGRES
     $json = file_get_contents('php://input');
     $prod=json_decode($json);
-    $miRespuesta="correcto";
-    $producto=new Producto($prod->nombre,$prod->categoria,$prod->imagen,$prod->cantidad);
+    $miRespuesta=-10;// <0 si esta mal
+    $producto=new Producto($prod->nombre,$prod->categoria,$prod->imagen,$prod->precio);
     $resp=$producto->ejecutarAccion("insertar");
-    if(!$resp){
-        $miRespuesta="incorrecto";
-    }
+    //cambiar resp para devolver el id del producto insertardo 
     
     header('Content-Type: application/json');
     echo json_encode($miRespuesta);
