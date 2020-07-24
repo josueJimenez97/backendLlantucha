@@ -1,7 +1,6 @@
 <?php
     class Usuario implements JsonSerializable{
         private static $userid;
-
         
         //cierra la conexion con la base de datos
         public static function cerrarSesion(){

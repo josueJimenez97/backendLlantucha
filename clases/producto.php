@@ -3,10 +3,12 @@
         private $nombre;
         private $categoria;
         private $imagen;
-        public function __construct($nombre,$categoria,$imagen){
+        private $idcategoria;
+        public function __construct($nombre,$categoria,$imagen,$idcategoria){
             $this->nombre=$nombre;
             $this->categoria=$categoria;
             $this->imagen=$imagen;
+            $this->idcategoria=$idcategoria;
         }
 
         public function ejecutarAccion($accion){
@@ -24,7 +26,7 @@
             try{
                 $con=Conexion::obtenerConexion();
                 $consulta= $con->prepare('select * from fadd_product(?,?,?)');
-                $consulta->execute([$this->categoria,$this->nombre,$this->imagen]);
+                $consulta->execute([$this->idcategoria,$this->nombre,$this->imagen]);
                
             }catch(PDOException $ex){
                 $res=-10;
