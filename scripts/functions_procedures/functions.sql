@@ -64,7 +64,7 @@ CREATE OR REPLACE FUNCTION public.getitem(
     
 AS $BODY$BEGIN
 RETURN QUERY 
-	SELECT item.precio,fabrica.nombrefabrica
+	SELECT idpro,idtip,item.cantidad,item.precio,fabrica.nombrefabrica
 	FROM "Item" as item, "Fabrica" as fabrica
 	WHERE item."Producto_Tipo_Producto_idtipo"=idtip AND item."Producto_id_producto"=idpro AND fabrica.idfabrica=item."Fabrica_idfrabica";
 END;
@@ -72,6 +72,7 @@ $BODY$;
 
 ALTER FUNCTION public.getitem(integer, integer)
     OWNER TO postgres;
+
 -- FUNCTION: public.getprod()
 
 -- DROP FUNCTION public.getprod();

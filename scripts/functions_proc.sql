@@ -78,7 +78,9 @@ CREATE OR REPLACE FUNCTION public.fadd_producto(
 AS $BODY$BEGIN
 insert into "Producto"("Tipo_Producto_idtipo",nombre_producto,imagen)
 values (idtipo,nombre,imagen);
-return 0;
+return (SELECT max(id_producto)
+	   FROM "Producto");
+
 END;$BODY$;
 
 ALTER FUNCTION public.fadd_producto(integer, character varying, character varying)

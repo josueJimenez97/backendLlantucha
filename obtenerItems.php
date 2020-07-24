@@ -19,9 +19,9 @@
     foreach($resultado as $fila){
         $item=array();
         
-        $item['precio']=$fila[0];
-        $item['nombrefab']=$fila[1];
-        
+        $item['precio']=$fila[3];
+        $item['nombrefab']=$fila[4];
+        $item['cantidad']=$fila[2];
         array_push($listaProductos,$item);
     }
     header('Content-Type: application/json');

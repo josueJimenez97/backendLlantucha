@@ -13,7 +13,7 @@
     
     $listaProductos=array();
     foreach($resultado as $fila){
-        $producto=new Producto($fila[0],$fila[1],$fila[2],$fila[3]);
+        $producto=new Producto($fila[0],$fila[1],$fila[2],$idtipo);
         array_push($listaProductos,$producto);
     }
     header('Content-Type: application/json');

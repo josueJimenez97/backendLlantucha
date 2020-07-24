@@ -19,7 +19,7 @@
     if (!$idfabrica || !$categoria || !$idproducto || !$fabrica || !$cantidad)
         $miRespuesta="incorrecto";
 
-    $consulta= $con->prepare("call add_item(?,?,?,?)");
+    $consulta= $con->prepare("select * from fadd_item(?,?,?,?)");
     $consulta->execute($categoria,$idproducto,$idfabrica,$cantidad,$precio);
     $idfabrica=$consulta->fetch(PDO::FETCH_OBJ);
 

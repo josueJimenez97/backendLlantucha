@@ -25,7 +25,7 @@
             $res=10;
             try{
                 $con=Conexion::obtenerConexion();
-                $consulta= $con->prepare('select * from fadd_product(?,?,?)');
+                $consulta= $con->prepare('select * from fadd_producto(?,?,?)');
                 $consulta->execute([$this->idcategoria,$this->nombre,$this->imagen]);
                
             }catch(PDOException $ex){
