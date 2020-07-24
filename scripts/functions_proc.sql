@@ -1,6 +1,18 @@
 insert into "Usuario"(nombre,correo,password)
 VALUES ('admin','admin','admin');
+insert into "Tipo_Producto"(idtipo,nombretipo)
+VALUES (1,'Obra Gruesa');
+insert into "Tipo_Producto"(idtipo,nombretipo)
+VALUES (2,'Obra Fina');
+insert into "Tipo_Producto"(idtipo,nombretipo)
+VALUES (3,'Herramientas');
+insert into "Tipo_Producto"(idtipo,nombretipo)
+VALUES (4,'Maquinaria');
 
+insert into "Fabrica"(nombrefabrica)
+values ('Hammer');
+insert into "Fabrica"(nombrefabrica)
+values ('Camba');
 -- FUNCTION: public.fadd_item(integer, integer, integer, integer, integer)
 
 -- DROP FUNCTION public.fadd_item(integer, integer, integer, integer, integer);
