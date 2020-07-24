@@ -1,3 +1,6 @@
+insert into "Usuario"(nombre,correo,password)
+VALUES ('admin','admin','admin');
+
 -- FUNCTION: public.fadd_item(integer, integer, integer, integer, integer)
 
 -- DROP FUNCTION public.fadd_item(integer, integer, integer, integer, integer);
