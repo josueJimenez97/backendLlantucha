@@ -319,3 +319,32 @@ END;$BODY$;
 
 ALTER FUNCTION public.usermail(character varying)
     OWNER TO postgres;
+
+
+
+-- FUNCTION: public.gettodoitem()
+
+-- DROP FUNCTION public.gettodoitem();
+
+CREATE OR REPLACE FUNCTION public.gettodoitem(
+	)
+    RETURNS TABLE(nomfab character varying, cantidad integer, precio integer, nombre_producto character varying, idprod integer) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+    
+AS $BODY$BEGIN
+RETURN QUERY select dos.nombrefabrica,dos.cantidad,dos.precio,producto.nombre_producto,producto.id_producto
+from (select *
+from "Item" as item, "Fabrica" as fabrica
+where item."Fabrica_idfrabica"= fabrica.idfabrica)as 
+dos, "Producto" as producto
+where producto.id_producto=dos."Producto_id_producto" and producto."Tipo_Producto_idtipo"=dos."Producto_Tipo_Producto_idtipo"
+;
+END;
+$BODY$;
+
+ALTER FUNCTION public.gettodoitem()
+    OWNER TO postgres;
