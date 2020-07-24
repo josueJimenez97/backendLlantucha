@@ -6,14 +6,14 @@
     $con=Conexion::obtenerConexion(); //ABRIMOS CONEXION A POSTGRES CONFIGUAR config.php CON LO DATOS DE SU POSTGRES
     $idtipo = $_GET['idTipo'];
     $consulta= $con->prepare("SELECT *
-                              FROM getprodtipo( ? )");
+                              FROM getitemtipo( ? )");
     $consulta->execute([$idtipo]);
     
     $resultado=$consulta->fetchAll();
     
     $listaProductos=array();
     foreach($resultado as $fila){
-        $producto=new Producto($fila[0],$fila[1],$fila[2],$idtipo);
+        $producto=new Producto($fila[0],$fila[1],$fila[2],$idtipo,$fila[3]);
         array_push($listaProductos,$producto);
     }
     header('Content-Type: application/json');
