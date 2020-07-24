@@ -4,17 +4,20 @@
         private $categoria;
         private $imagen;
         private $idcategoria;
-        public function __construct($nombre,$categoria,$imagen,$idcategoria){
+        private $idproducto;
+
+        public function __construct($nombre,$categoria,$imagen,$idcategoria,$idproducto=-1){
             $this->nombre=$nombre;
             $this->categoria=$categoria;
             $this->imagen=$imagen;
             $this->idcategoria=$idcategoria;
+            $this->idproducto=$idproducto;
         }
 
         public function ejecutarAccion($accion){
-            $res=false;
+            $res=-10;
             switch($accion){
-                case "nada": $res=true;
+                case "nada": $res=1;
                 break;
                 case "insertar": $res=$this->insertarProducto();
             }
@@ -22,16 +25,17 @@
         }
 
         private function insertarProducto(){
-            $res=10;
+            $res=-10;
             try{
                 $con=Conexion::obtenerConexion();
                 $consulta= $con->prepare('select * from fadd_producto(?,?,?)');
                 $consulta->execute([$this->idcategoria,$this->nombre,$this->imagen]);
-               
+                $res=$consulta->fetch(PDO::FETCH_OBJ);//test this
+                $res=$res->fadd_producto;
             }catch(PDOException $ex){
-                $res=-10;
+                $res=-$this->idcategoria-1;
             }
-            $res=$consulta->fetch(PDO::FETCH_OBJ);//test this
+            
             return $res;
             
         }
@@ -40,6 +44,8 @@
                 'nombre'=>$this->nombre,
                 'categoria'=>$this->categoria,
                 'imagen'=>$this->imagen,
+                'idCategoria'=>$this->idcategoria,
+                'idproducto'=>$this->idproducto
             ];
         }
     }

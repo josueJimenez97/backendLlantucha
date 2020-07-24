@@ -9,8 +9,7 @@
     $miRespuesta=-10;// <0 si esta mal
     $producto=new Producto($prod->nombre,$prod->categoria,$prod->imagen,$prod->idCategoria);
     
-    $resp=$producto->ejecutarAccion("insertar");
-    echo $prod->nombre.$prod->categoria.$prod->imagen;
+    $miRespuesta=$producto->ejecutarAccion("insertar");
     //cambiar resp para devolver el id del producto insertardo 
     
     header('Content-Type: application/json');
