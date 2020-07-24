@@ -7,7 +7,7 @@
     $json = file_get_contents('php://input');
     $prod=json_decode($json);
     $miRespuesta=-10;// <0 si esta mal
-    $producto=new Producto($prod->nombre,$prod->categoria,$prod->imagen,$prod->precio);
+    $producto=new Producto($prod->nombre,$prod->categoria,$prod->imagen);
     $resp=$producto->ejecutarAccion("insertar");
     //cambiar resp para devolver el id del producto insertardo 
     
