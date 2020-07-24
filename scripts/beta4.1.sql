@@ -1,3 +1,4 @@
+BEGIN
 CREATE SEQUENCE seq_producto
         INCREMENT 1
         MINVALUE 110
@@ -85,6 +86,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Interfaz"
     OWNER to postgres;
+COMMIT;
 ------------------------------PARTE------------------------------------
 -- Table: public.Producto
 
@@ -196,6 +198,32 @@ CREATE TABLE public."Calificacion"
 TABLESPACE pg_default;
 
 ALTER TABLE public."Calificacion"
+    OWNER to postgres;
+-- Table: public.Item
+
+-- DROP TABLE public."Item";
+
+CREATE TABLE public."Item"
+(
+    "Producto_Tipo_Producto_idtipo" integer NOT NULL,
+    "Producto_id_producto" integer NOT NULL,
+    "Fabrica_idfrabica" integer NOT NULL,
+    cantidad integer,
+    precio integer,
+    CONSTRAINT "Item_pkey" PRIMARY KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto", "Fabrica_idfrabica"),
+    CONSTRAINT "Item_Fabrica_idfrabica_fkey" FOREIGN KEY ("Fabrica_idfrabica")
+        REFERENCES public."Fabrica" (idfabrica) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "Item_Producto_Tipo_Producto_idtipo_Producto_id_producto_fkey" FOREIGN KEY ("Producto_Tipo_Producto_idtipo", "Producto_id_producto")
+        REFERENCES public."Producto" ("Tipo_Producto_idtipo", id_producto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Item"
     OWNER to postgres;
 
 ------------------------------PARTE------------------------------------
